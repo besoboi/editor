@@ -33,15 +33,14 @@ public:
     QAction *open;
     QAction *create;
     QAction *save;
-    QAction *action_5;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QFontComboBox *font;
-    QComboBox *fontColor;
-    QComboBox *fontSize;
+    QFontComboBox *fontBox;
+    QComboBox *fontSizeBox;
+    QComboBox *fontColorBox;
     QTextEdit *textEdit;
     QMenuBar *menuBar;
-    QMenu *file;
+    QMenu *fileMenu;
     QMenu *compile;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -50,35 +49,34 @@ public:
     {
         if (editorClass->objectName().isEmpty())
             editorClass->setObjectName(QStringLiteral("editorClass"));
-        editorClass->resize(1066, 766);
+        editorClass->setWindowModality(Qt::NonModal);
+        editorClass->resize(984, 823);
         open = new QAction(editorClass);
         open->setObjectName(QStringLiteral("open"));
         create = new QAction(editorClass);
         create->setObjectName(QStringLiteral("create"));
         save = new QAction(editorClass);
         save->setObjectName(QStringLiteral("save"));
-        action_5 = new QAction(editorClass);
-        action_5->setObjectName(QStringLiteral("action_5"));
         centralWidget = new QWidget(editorClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        font = new QFontComboBox(centralWidget);
-        font->setObjectName(QStringLiteral("font"));
+        fontBox = new QFontComboBox(centralWidget);
+        fontBox->setObjectName(QStringLiteral("fontBox"));
 
-        gridLayout->addWidget(font, 0, 0, 1, 1);
+        gridLayout->addWidget(fontBox, 0, 0, 1, 1);
 
-        fontColor = new QComboBox(centralWidget);
-        fontColor->setObjectName(QStringLiteral("fontColor"));
+        fontSizeBox = new QComboBox(centralWidget);
+        fontSizeBox->setObjectName(QStringLiteral("fontSizeBox"));
 
-        gridLayout->addWidget(fontColor, 0, 1, 1, 1);
+        gridLayout->addWidget(fontSizeBox, 0, 1, 1, 1);
 
-        fontSize = new QComboBox(centralWidget);
-        fontSize->setObjectName(QStringLiteral("fontSize"));
+        fontColorBox = new QComboBox(centralWidget);
+        fontColorBox->setObjectName(QStringLiteral("fontColorBox"));
 
-        gridLayout->addWidget(fontSize, 0, 2, 1, 1);
+        gridLayout->addWidget(fontColorBox, 0, 2, 1, 1);
 
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
@@ -88,9 +86,9 @@ public:
         editorClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(editorClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1066, 26));
-        file = new QMenu(menuBar);
-        file->setObjectName(QStringLiteral("file"));
+        menuBar->setGeometry(QRect(0, 0, 984, 31));
+        fileMenu = new QMenu(menuBar);
+        fileMenu->setObjectName(QStringLiteral("fileMenu"));
         compile = new QMenu(menuBar);
         compile->setObjectName(QStringLiteral("compile"));
         editorClass->setMenuBar(menuBar);
@@ -101,11 +99,11 @@ public:
         statusBar->setObjectName(QStringLiteral("statusBar"));
         editorClass->setStatusBar(statusBar);
 
-        menuBar->addAction(file->menuAction());
+        menuBar->addAction(fileMenu->menuAction());
         menuBar->addAction(compile->menuAction());
-        file->addAction(open);
-        file->addAction(create);
-        file->addAction(save);
+        fileMenu->addAction(open);
+        fileMenu->addAction(create);
+        fileMenu->addAction(save);
 
         retranslateUi(editorClass);
 
@@ -118,8 +116,7 @@ public:
         open->setText(QApplication::translate("editorClass", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214", Q_NULLPTR));
         create->setText(QApplication::translate("editorClass", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214", Q_NULLPTR));
         save->setText(QApplication::translate("editorClass", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", Q_NULLPTR));
-        action_5->setText(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\320\270\321\200\320\276\320\262\320\260\321\202\321\214", Q_NULLPTR));
-        file->setTitle(QApplication::translate("editorClass", "\320\244\320\260\320\271\320\273", Q_NULLPTR));
+        fileMenu->setTitle(QApplication::translate("editorClass", "\320\244\320\260\320\271\320\273", Q_NULLPTR));
         compile->setTitle(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\321\217\321\206\320\270\321\217", Q_NULLPTR));
     } // retranslateUi
 

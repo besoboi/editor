@@ -1,12 +1,3 @@
 #include "textEdit.h"
+#include <QFile>
 
-
-void textEdit::changeFont() {
-	textEditField->setCurrentFont(fontEdit->currentFont());
-};
-void textEdit::changeFontColor() {
-
-};
-void textEdit::changeFontSize() {
-
-};
