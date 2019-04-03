@@ -13,6 +13,11 @@
     <height>823</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>editor</string>
   </property>
@@ -28,7 +33,13 @@
      <widget class="QComboBox" name="fontColorBox"/>
     </item>
     <item row="1" column="0" colspan="3">
-     <widget class="QTextEdit" name="textEdit"/>
+     <widget class="QTextEdit" name="textEdit">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -38,7 +49,7 @@
      <x>0</x>
      <y>0</y>
      <width>984</width>
-     <height>31</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">

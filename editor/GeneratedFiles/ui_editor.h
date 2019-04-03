@@ -51,6 +51,9 @@ public:
             editorClass->setObjectName(QStringLiteral("editorClass"));
         editorClass->setWindowModality(Qt::NonModal);
         editorClass->resize(984, 823);
+        QFont font;
+        font.setPointSize(8);
+        editorClass->setFont(font);
         open = new QAction(editorClass);
         open->setObjectName(QStringLiteral("open"));
         create = new QAction(editorClass);
@@ -80,13 +83,16 @@ public:
 
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
+        QFont font1;
+        font1.setPointSize(12);
+        textEdit->setFont(font1);
 
         gridLayout->addWidget(textEdit, 1, 0, 1, 3);
 
         editorClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(editorClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 984, 31));
+        menuBar->setGeometry(QRect(0, 0, 984, 23));
         fileMenu = new QMenu(menuBar);
         fileMenu->setObjectName(QStringLiteral("fileMenu"));
         compile = new QMenu(menuBar);

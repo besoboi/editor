@@ -1,9 +1,10 @@
 #include "editor.h"
-//#include "textEdit.h"
 #include <QFileDialog>
 #include <QFont>
 #include <QFile>
 #include <QTextStream>
+#include <QAction>
+#include <string>
 
 editor::editor(QWidget *parent)
 	: QMainWindow(parent)
@@ -14,30 +15,54 @@ editor::editor(QWidget *parent)
 	fontEdit = ui.fontBox;
 	fontSizeEdit = ui.fontSizeBox;
 	fontColorEdit = ui.fontColorBox;
-	connect(fontEdit, SIGNAL(currentFontChanged(const QFont &font)), this, SLOT(changeFont(font)));
-	connect(fontSizeEdit, SIGNAL(activated()), this, SLOT(changeFontSize()));
-	connect(fontColorEdit, SIGNAL(activated()), this, SLOT(changeFontColor()));
-	connect(fileMenu, SIGNAL(), this, SLOT(openFile()));
+	for (int i = 2; i < 28; i += 1) {
+		fontSizeEdit->addItem(QString::number(i));
+	}
+	connect(fontEdit, SIGNAL(&QFontComboBox::currentFontChanged), this, SLOT(changeFont(font)));
+	connect(fontSizeEdit, SIGNAL(currentIndexChanged(QString)), this, SLOT(changeFontSize(QString)));
+	connect(fontColorEdit, SIGNAL(currentIndexChanged(QString)), this, SLOT(changeFontColor(QString)));
+	connect(ui.open, SIGNAL(triggered()), this, SLOT(openFile()));
+	connect(ui.create, SIGNAL(triggered()), this, SLOT(makeFile()));
+	connect(ui.save, SIGNAL(triggered()), this, SLOT(saveFile()));
+
 }
+
 
 void editor::openFile() {
 	openedFileName = QFileDialog::getOpenFileName();
 	QFile openedFile(openedFileName);
-	QTextStream in(&openedFile);
-	QString line = in.readLine();
-	while (!line.isNull()) {
+	openedFile.open(QIODevice::ReadOnly | QIODevice::Text);
+	while (!openedFile.atEnd()){
+		QByteArray line = openedFile.readLine();
 		textEditField->setText(textEditField->toPlainText() + line + "\n");
+}
+
+}
+
+void editor::makeFile() {
+	textEditField->clear();
+	openedFileName = "clear";
+}
+
+void editor::saveFile() {
+	openedFileName = QFileDialog::getSaveFileName();
+	QFile out(openedFileName);
+	if (out.open(QIODevice::WriteOnly)) {
+		QTextStream stream(&out);
+		out.close();
 	}
 }
 
 void editor::changeFont(const QFont &font) {
-	textEditField->setFont(font);
+	QFont f = font;
+	f.setPixelSize(fontSizeEdit->currentIndex());
+	textEditField->setFont(f);
 }
 
-void editor::changeFontSize() {
-
+void editor::changeFontSize(const QString& selected) {
+	textEditField->setFontPointSize(selected.toInt());
 }
 
-void editor::changeFontColor() {
-
+void editor::changeFontColor(const QString& selected) {
+	
 }

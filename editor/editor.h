@@ -19,8 +19,10 @@ public:
 private slots:
 	void openFile();
 	void changeFont(const QFont &font);
-	void changeFontSize();
-	void changeFontColor();
+	void changeFontSize(const QString& selected);
+	void changeFontColor(const QString& selected);
+	void makeFile();
+	void saveFile();
 
 private:
 	Ui::editorClass ui;
