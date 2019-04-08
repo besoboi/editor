@@ -13,13 +13,12 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QFontComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
@@ -35,10 +34,9 @@ public:
     QAction *save;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QFontComboBox *fontBox;
-    QComboBox *fontSizeBox;
-    QComboBox *fontColorBox;
+    QPushButton *colorButton;
     QTextEdit *textEdit;
+    QPushButton *fontButton;
     QMenuBar *menuBar;
     QMenu *fileMenu;
     QMenu *compile;
@@ -66,20 +64,10 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        fontBox = new QFontComboBox(centralWidget);
-        fontBox->setObjectName(QStringLiteral("fontBox"));
+        colorButton = new QPushButton(centralWidget);
+        colorButton->setObjectName(QStringLiteral("colorButton"));
 
-        gridLayout->addWidget(fontBox, 0, 0, 1, 1);
-
-        fontSizeBox = new QComboBox(centralWidget);
-        fontSizeBox->setObjectName(QStringLiteral("fontSizeBox"));
-
-        gridLayout->addWidget(fontSizeBox, 0, 1, 1, 1);
-
-        fontColorBox = new QComboBox(centralWidget);
-        fontColorBox->setObjectName(QStringLiteral("fontColorBox"));
-
-        gridLayout->addWidget(fontColorBox, 0, 2, 1, 1);
+        gridLayout->addWidget(colorButton, 0, 1, 1, 1);
 
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
@@ -87,12 +75,17 @@ public:
         font1.setPointSize(12);
         textEdit->setFont(font1);
 
-        gridLayout->addWidget(textEdit, 1, 0, 1, 3);
+        gridLayout->addWidget(textEdit, 1, 0, 1, 2);
+
+        fontButton = new QPushButton(centralWidget);
+        fontButton->setObjectName(QStringLiteral("fontButton"));
+
+        gridLayout->addWidget(fontButton, 0, 0, 1, 1);
 
         editorClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(editorClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 984, 23));
+        menuBar->setGeometry(QRect(0, 0, 984, 26));
         fileMenu = new QMenu(menuBar);
         fileMenu->setObjectName(QStringLiteral("fileMenu"));
         compile = new QMenu(menuBar);
@@ -122,6 +115,8 @@ public:
         open->setText(QApplication::translate("editorClass", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214", Q_NULLPTR));
         create->setText(QApplication::translate("editorClass", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214", Q_NULLPTR));
         save->setText(QApplication::translate("editorClass", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", Q_NULLPTR));
+        colorButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
+        fontButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
         fileMenu->setTitle(QApplication::translate("editorClass", "\320\244\320\260\320\271\320\273", Q_NULLPTR));
         compile->setTitle(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\321\217\321\206\320\270\321\217", Q_NULLPTR));
     } // retranslateUi
