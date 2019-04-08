@@ -4,9 +4,8 @@
 #include <QMenu>
 #include <QString>
 #include <QTextEdit>
-#include <QComboBox>
-#include <QFontComboBox>
 #include <QFont>
+#include <QPushButton>
 #include "ui_editor.h"
 
 class editor : public QMainWindow
@@ -18,18 +17,19 @@ public:
 
 private slots:
 	void openFile();
-	void changeFont(const QFont &font);
-	void changeFontSize(const QString& selected);
-	void changeFontColor(const QString& selected);
+	void changeFont();
+	void changeFontColor();
 	void makeFile();
 	void saveFile();
+	void compileFile();
 
 private:
 	Ui::editorClass ui;
 	QMenu *fileMenu;
 	QString openedFileName;
+	QString compiledFileName;
 	QTextEdit *textEditField;
-	QFontComboBox *fontEdit;
-	QComboBox *fontSizeEdit;
-	QComboBox *fontColorEdit;
+	QPushButton *fontEdit;
+	QPushButton *fontColorEdit;
+	QMenu *compileMenu;
 };

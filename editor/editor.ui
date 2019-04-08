@@ -23,21 +23,26 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QFontComboBox" name="fontBox"/>
-    </item>
     <item row="0" column="1">
-     <widget class="QComboBox" name="fontSizeBox"/>
+     <widget class="QPushButton" name="colorButton">
+      <property name="text">
+       <string>Смена цвета шрифта</string>
+      </property>
+     </widget>
     </item>
-    <item row="0" column="2">
-     <widget class="QComboBox" name="fontColorBox"/>
-    </item>
-    <item row="1" column="0" colspan="3">
+    <item row="1" column="0" colspan="2">
      <widget class="QTextEdit" name="textEdit">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="fontButton">
+      <property name="text">
+       <string>Смена шрифта</string>
       </property>
      </widget>
     </item>
@@ -49,7 +54,7 @@
      <x>0</x>
      <y>0</y>
      <width>984</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -60,13 +65,15 @@
     <addaction name="create"/>
     <addaction name="save"/>
    </widget>
-   <widget class="QMenu" name="compile">
+   <widget class="QMenu" name="compileMenu">
     <property name="title">
      <string>Компиляция</string>
     </property>
+    <addaction name="compChooser"/>
+    <addaction name="compile"/>
    </widget>
    <addaction name="fileMenu"/>
-   <addaction name="compile"/>
+   <addaction name="compileMenu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -90,6 +97,16 @@
   <action name="save">
    <property name="text">
     <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="compChooser">
+   <property name="text">
+    <string>Выбор компилятора</string>
+   </property>
+  </action>
+  <action name="compile">
+   <property name="text">
+    <string>Скомпилировать</string>
    </property>
   </action>
  </widget>
