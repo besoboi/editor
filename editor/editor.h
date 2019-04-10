@@ -9,6 +9,7 @@
 #include <QFont>
 #include <QPushButton>
 #include "ui_editor.h"
+#include "Source.h"
 
 class editor : public QMainWindow
 {
@@ -28,6 +29,7 @@ private:
 	Ui::editorClass ui;
 	QMenu *fileMenu;
 	QString openedFileName;
+	Highlighter *codeHighlighter;
 	QTextEdit *textEditField;
 	QPushButton *fontEdit;
 	QPushButton *fontColorEdit;

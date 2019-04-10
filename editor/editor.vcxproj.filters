@@ -47,6 +47,9 @@
     <QtMoc Include="editor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Source.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="editor.ui">
@@ -57,10 +60,5 @@
     <QtRcc Include="editor.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

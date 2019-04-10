@@ -21,9 +21,7 @@ editor::editor(QWidget *parent)
 	connect(ui.open, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(ui.create, SIGNAL(triggered()), this, SLOT(makeFile()));
 	connect(ui.save, SIGNAL(triggered()), this, SLOT(saveFile()));
-
 }
-
 
 void editor::openFile() {
 	openedFileName = QFileDialog::getOpenFileName();
@@ -32,8 +30,8 @@ void editor::openFile() {
 	while (!openedFile.atEnd()){
 		QByteArray line = openedFile.readLine();
 		textEditField->setText(textEditField->toPlainText() + line + "\n");
-}
-
+	}
+	codeHighlighter = new Highlighter(textEditField->document());
 }
 
 void editor::makeFile() {
