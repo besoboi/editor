@@ -4,9 +4,12 @@
 #include <QMenu>
 #include <QString>
 #include <QTextEdit>
+#include <QComboBox>
+#include <QFontComboBox>
 #include <QFont>
 #include <QPushButton>
 #include "ui_editor.h"
+#include "Source.h"
 
 class editor : public QMainWindow
 {
@@ -21,15 +24,13 @@ private slots:
 	void changeFontColor();
 	void makeFile();
 	void saveFile();
-	void compileFile();
 
 private:
 	Ui::editorClass ui;
 	QMenu *fileMenu;
 	QString openedFileName;
-	QString compiledFileName;
+	Highlighter *codeHighlighter;
 	QTextEdit *textEditField;
 	QPushButton *fontEdit;
 	QPushButton *fontColorEdit;
-	QMenu *compileMenu;
 };

@@ -32,8 +32,6 @@ public:
     QAction *open;
     QAction *create;
     QAction *save;
-    QAction *compChooser;
-    QAction *compile;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QPushButton *colorButton;
@@ -41,7 +39,7 @@ public:
     QPushButton *fontButton;
     QMenuBar *menuBar;
     QMenu *fileMenu;
-    QMenu *compileMenu;
+    QMenu *compile;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -60,10 +58,6 @@ public:
         create->setObjectName(QStringLiteral("create"));
         save = new QAction(editorClass);
         save->setObjectName(QStringLiteral("save"));
-        compChooser = new QAction(editorClass);
-        compChooser->setObjectName(QStringLiteral("compChooser"));
-        compile = new QAction(editorClass);
-        compile->setObjectName(QStringLiteral("compile"));
         centralWidget = new QWidget(editorClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -94,8 +88,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 984, 26));
         fileMenu = new QMenu(menuBar);
         fileMenu->setObjectName(QStringLiteral("fileMenu"));
-        compileMenu = new QMenu(menuBar);
-        compileMenu->setObjectName(QStringLiteral("compileMenu"));
+        compile = new QMenu(menuBar);
+        compile->setObjectName(QStringLiteral("compile"));
         editorClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(editorClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -105,12 +99,10 @@ public:
         editorClass->setStatusBar(statusBar);
 
         menuBar->addAction(fileMenu->menuAction());
-        menuBar->addAction(compileMenu->menuAction());
+        menuBar->addAction(compile->menuAction());
         fileMenu->addAction(open);
         fileMenu->addAction(create);
         fileMenu->addAction(save);
-        compileMenu->addAction(compChooser);
-        compileMenu->addAction(compile);
 
         retranslateUi(editorClass);
 
@@ -123,12 +115,10 @@ public:
         open->setText(QApplication::translate("editorClass", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214", Q_NULLPTR));
         create->setText(QApplication::translate("editorClass", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214", Q_NULLPTR));
         save->setText(QApplication::translate("editorClass", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", Q_NULLPTR));
-        compChooser->setText(QApplication::translate("editorClass", "\320\222\321\213\320\261\320\276\321\200 \320\272\320\276\320\274\320\277\320\270\320\273\321\217\321\202\320\276\321\200\320\260", Q_NULLPTR));
-        compile->setText(QApplication::translate("editorClass", "\320\241\320\272\320\276\320\274\320\277\320\270\320\273\320\270\321\200\320\276\320\262\320\260\321\202\321\214", Q_NULLPTR));
         colorButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
         fontButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
         fileMenu->setTitle(QApplication::translate("editorClass", "\320\244\320\260\320\271\320\273", Q_NULLPTR));
-        compileMenu->setTitle(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\321\217\321\206\320\270\321\217", Q_NULLPTR));
+        compile->setTitle(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\321\217\321\206\320\270\321\217", Q_NULLPTR));
     } // retranslateUi
 
 };
