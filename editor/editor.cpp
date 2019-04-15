@@ -16,6 +16,7 @@ editor::editor(QWidget *parent)
 	textEditField = ui.textEdit;
 	fontEdit = ui.fontButton;
 	fontColorEdit = ui.colorButton;
+	codeHighlighter = new Highlighter(textEditField->document());
 	connect(fontEdit, SIGNAL(released()), this, SLOT(changeFont()));
 	connect(fontColorEdit, SIGNAL(released()), this, SLOT(changeFontColor()));
 	connect(ui.open, SIGNAL(triggered()), this, SLOT(openFile()));
@@ -24,6 +25,7 @@ editor::editor(QWidget *parent)
 }
 
 void editor::openFile() {
+	makeFile();
 	openedFileName = QFileDialog::getOpenFileName();
 	QFile openedFile(openedFileName);
 	openedFile.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -44,6 +46,9 @@ void editor::saveFile() {
 	QFile out(openedFileName);
 	if (out.open(QIODevice::WriteOnly)) {
 		QTextStream stream(&out);
+		QString text = textEditField->toPlainText();
+		stream << text;
+		out.flush();
 		out.close();
 	}
 }

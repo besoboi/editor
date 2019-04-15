@@ -18,6 +18,7 @@ class editor : public QMainWindow
 public:
 	editor(QWidget *parent = Q_NULLPTR);
 
+
 private slots:
 	void openFile();
 	void changeFont();
