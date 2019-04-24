@@ -5,11 +5,14 @@
 #include <QString>
 #include <QTextEdit>
 #include <QComboBox>
-#include <QFontComboBox>
 #include <QFont>
 #include <QPushButton>
+#include <QShortcut>
+#include <QTextCodec>
+
 #include "ui_editor.h"
 #include "Source.h"
+
 
 class editor : public QMainWindow
 {
@@ -25,7 +28,10 @@ private slots:
 	void changeFontColor();
 	void makeFile();
 	void saveFile();
-
+	void fastSave();
+	void codecChange();
+	void bgColorChange();
+	void compile();
 private:
 	Ui::editorClass ui;
 	QMenu *fileMenu;
@@ -34,4 +40,8 @@ private:
 	QTextEdit *textEditField;
 	QPushButton *fontEdit;
 	QPushButton *fontColorEdit;
+	QPushButton *bgColorButton;
+	QShortcut *keyCtrlS;
+	QComboBox *codecEdit;
+	QTextCodec *codec;
 };
