@@ -126,7 +126,6 @@ public:
         fileMenu->addAction(create);
         fileMenu->addAction(fastSave);
         fileMenu->addAction(save);
-        compileMenu->addAction(compChooser);
         compileMenu->addAction(compile);
 
         retranslateUi(editorClass);

@@ -107,6 +107,13 @@ void editor::bgColorChange() {
 };
 
 void editor::compile() {
-	
+#ifdef Q_OS_LINUX
+	if (openedFileName != "clear"){
+		QStringList filePath = openedFileName.split("/");
+		QString newFileName = filePath.takeLst();
+		string command = "g++ " + openedFileName + " -o " + newFileName;
+		system(command);
+}
+#endif
 };
 
