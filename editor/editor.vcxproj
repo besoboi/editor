@@ -113,9 +113,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="editor.cpp" />
+    <ClCompile Include="file.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="textEdit.cpp" />
+    <ClCompile Include="file.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="editor.h" />

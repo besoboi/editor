@@ -12,7 +12,7 @@
 
 #include "ui_editor.h"
 #include "Source.h"
-
+#include "file.h"
 
 class editor : public QMainWindow
 {
@@ -34,14 +34,15 @@ private slots:
 	void compile();
 private:
 	Ui::editorClass ui;
-	QMenu *fileMenu;
-	QString openedFileName;
-	Highlighter *codeHighlighter;
-	QTextEdit *textEditField;
-	QPushButton *fontEdit;
-	QPushButton *fontColorEdit;
-	QPushButton *bgColorButton;
-	QShortcut *keyCtrlS;
-	QComboBox *codecEdit;
-	QTextCodec *codec;
+	QMenu *_fileMenu;
+	QString _openedFileName;
+	Highlighter *_codeHighlighter;
+	QTextEdit *_textEditField;
+	QPushButton *_fontEdit;
+	QPushButton *_fontColorEdit;
+	QPushButton *_bgColorButton;
+	QShortcut *_keyCtrlS;
+	QComboBox *_codecEdit;
+	QTextCodec *_codec;
+	fileInstance _file;
 };

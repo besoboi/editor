@@ -1,8 +1,6 @@
 #include "editor.h"
 #include <QFileDialog>
 #include <QFont>
-#include <QFile>
-#include <QTextStream>
 #include <QAction>
 #include <string>
 #include <QColorDialog>
@@ -13,107 +11,102 @@ editor::editor(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	codec = QTextCodec::codecForName("Windows-1251");
-	fileMenu = ui.fileMenu;
-	textEditField = ui.textEdit;
-	fontEdit = ui.fontButton;
-	fontColorEdit = ui.colorButton;
-	codecEdit = ui.codecComboBox;
-	bgColorButton = ui.backgroundColorButton;
-	codeHighlighter = new Highlighter(textEditField->document());
-	keyCtrlS = new QShortcut(this);
-	keyCtrlS->setKey(Qt::CTRL + Qt::Key_S);
+	_codec = QTextCodec::codecForName("Windows-1251");
+	_fileMenu = ui.fileMenu;
+	_textEditField = ui.textEdit;
+	_fontEdit = ui.fontButton;
+	_fontColorEdit = ui.colorButton;
+	_codecEdit = ui.codecComboBox;
+	_bgColorButton = ui.backgroundColorButton;
+	_codeHighlighter = new Highlighter(_textEditField->document());
+	_keyCtrlS = new QShortcut(this);
+	_keyCtrlS->setKey(Qt::CTRL + Qt::Key_S);
 
-	connect(fontEdit, SIGNAL(released()), this, SLOT(changeFont()));
-	connect(fontColorEdit, SIGNAL(released()), this, SLOT(changeFontColor()));
-	connect(bgColorButton, SIGNAL(released()), this, SLOT(bgColorChange()));
+	#ifdef Q_OS_WIN
+	ui.compile->setDisabled(true);
+	#endif
+
+	connect(_fontEdit, SIGNAL(released()), this, SLOT(changeFont()));
+	connect(_fontColorEdit, SIGNAL(released()), this, SLOT(changeFontColor()));
+	connect(_bgColorButton, SIGNAL(released()), this, SLOT(bgColorChange()));
 	connect(ui.open, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(ui.create, SIGNAL(triggered()), this, SLOT(makeFile()));
 	connect(ui.save, SIGNAL(triggered()), this, SLOT(saveFile()));
 	connect(ui.fastSave, SIGNAL(triggered()), this, SLOT(fastSave()));
 	connect(ui.compile, SIGNAL(triggered()), this, SLOT(compile()));
-	connect(keyCtrlS, SIGNAL(activated()), this, SLOT(fastSave()));
-	connect(codecEdit, SIGNAL(activated(int)) , this, SLOT(codecChange()));
+	connect(_keyCtrlS, SIGNAL(activated()), this, SLOT(fastSave()));
+	connect(_codecEdit, SIGNAL(activated(int)) , this, SLOT(codecChange()));
 }
 
 void editor::openFile() {
 	makeFile();
-	openedFileName = QFileDialog::getOpenFileName();
-	QFile openedFile(openedFileName);
-	openedFile.open(QIODevice::ReadOnly | QIODevice::Text);
-	while (!openedFile.atEnd()){
-		QString line = codec->toUnicode(openedFile.readLine());
-		textEditField->setText(textEditField->toPlainText() + line + "\n");
-	}
-	codeHighlighter = new Highlighter(textEditField->document());
+	_openedFileName = QFileDialog::getOpenFileName();
+	QString text = _codec->toUnicode(_file.open(_openedFileName));
+	_textEditField->setText(text);
 }
 
 void editor::makeFile() {
-	textEditField->clear();
-	openedFileName = "clear";
+	_textEditField->clear();
+	_openedFileName = "clear";
 }
 
 void editor::saveFile() {
-	openedFileName = QFileDialog::getSaveFileName();
-	QFile out(openedFileName);
-	if (out.open(QIODevice::WriteOnly)) {
-		QTextStream stream(&out);
-		QString text = textEditField->toPlainText();
-		stream << text;
-		out.flush();
-		out.close();
-	}
+	_openedFileName = QFileDialog::getSaveFileName();
+	_file.save(_openedFileName, _textEditField->toPlainText());
 }
 
 void editor::changeFont() {
 	bool ok;
 	QFont font = QFontDialog::getFont(&ok, this);
-	if (ok) textEditField->setFont(font);
-	else return;
+	if (ok) {
+		_textEditField->setFont(font);
+	}
+	else {
+		return;
+	}
 }
 
 void editor::changeFontColor() {
 	QColor selected = QColorDialog::getColor();
-	textEditField->setTextColor(selected);
+	_textEditField->setTextColor(selected);
 }
 
 void editor::fastSave() {
-	if (openedFileName != "clear") {
-		QFile out(openedFileName);
-		if (out.open(QIODevice::WriteOnly)) {
-			QTextStream stream(&out);
-			QString text = textEditField->toPlainText();
-			stream << text;
-			out.flush();
-			out.close();
-		}
+	if (_openedFileName != "clear") {
+		_file.save(_openedFileName, _textEditField->toPlainText());
 	}
 }
 
 void editor::codecChange() {
-	if (codecEdit->currentIndex() != -1) {
-		if (codecEdit->currentIndex() == 0) codec = QTextCodec::codecForName("Windows-1251");
-		if (codecEdit->currentIndex() == 1) codec = QTextCodec::codecForName("UTF-8");
-		if (codecEdit->currentIndex() == 2) codec = QTextCodec::codecForName("IBM 866");
-		if (codecEdit->currentIndex() == 3) codec = QTextCodec::codecForName("CP-1251");
+	if (_codecEdit->currentIndex() != -1) {
+		if (_codecEdit->currentIndex() == 0) {
+			_codec = QTextCodec::codecForName("Windows-1251");
+		}
+		if (_codecEdit->currentIndex() == 1) {
+			_codec = QTextCodec::codecForName("UTF-8");
+		}
+		if (_codecEdit->currentIndex() == 2) {
+			_codec = QTextCodec::codecForName("IBM 866");
+		}
+		if (_codecEdit->currentIndex() == 3) {
+			_codec = QTextCodec::codecForName("CP-1251");
+		}
 	}
-	
 }
 
 void editor::bgColorChange() {
 	QColor selected = QColorDialog::getColor();
-	
-	textEditField->setStyleSheet("QTextEdit { background-color : " + selected.name() + "}");
-};
+	_textEditField->setStyleSheet("QTextEdit { background-color : " + selected.name() + "}");
+}
 
 void editor::compile() {
 #ifdef Q_OS_LINUX
-	if (openedFileName != "clear"){
-		QStringList filePath = openedFileName.split("/");
+	if (_openedFileName != "clear"){
+		QStringList filePath = _openedFileName.split("/");
 		QString newFileName = filePath.takeLst();
-		string command = "g++ " + openedFileName + " -o " + newFileName;
+		string command = "g++ " + _openedFileName + " -o " + newFileName;
 		system(command);
-}
+	}
 #endif
-};
+}
 
