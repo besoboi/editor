@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
@@ -38,10 +39,14 @@ public:
     QAction *fastSave;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
+    QComboBox *codecComboBox;
     QPushButton *colorButton;
     QTextEdit *textEdit;
+    QPushButton *selectionColor;
+    QPushButton *textColorBG;
+    QPushButton *selectionTextColor;
+    QCheckBox *hlCheckBox;
     QPushButton *fontButton;
-    QComboBox *codecComboBox;
     QPushButton *backgroundColorButton;
     QMenuBar *menuBar;
     QMenu *fileMenu;
@@ -76,10 +81,15 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        codecComboBox = new QComboBox(centralWidget);
+        codecComboBox->setObjectName(QStringLiteral("codecComboBox"));
+
+        gridLayout->addWidget(codecComboBox, 1, 4, 1, 1);
+
         colorButton = new QPushButton(centralWidget);
         colorButton->setObjectName(QStringLiteral("colorButton"));
 
-        gridLayout->addWidget(colorButton, 0, 1, 1, 1);
+        gridLayout->addWidget(colorButton, 0, 4, 1, 1);
 
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
@@ -87,22 +97,37 @@ public:
         font1.setPointSize(12);
         textEdit->setFont(font1);
 
-        gridLayout->addWidget(textEdit, 2, 0, 1, 2);
+        gridLayout->addWidget(textEdit, 2, 0, 1, 5);
+
+        selectionColor = new QPushButton(centralWidget);
+        selectionColor->setObjectName(QStringLiteral("selectionColor"));
+
+        gridLayout->addWidget(selectionColor, 1, 3, 1, 1);
+
+        textColorBG = new QPushButton(centralWidget);
+        textColorBG->setObjectName(QStringLiteral("textColorBG"));
+
+        gridLayout->addWidget(textColorBG, 1, 2, 1, 1);
+
+        selectionTextColor = new QPushButton(centralWidget);
+        selectionTextColor->setObjectName(QStringLiteral("selectionTextColor"));
+
+        gridLayout->addWidget(selectionTextColor, 0, 3, 1, 1);
+
+        hlCheckBox = new QCheckBox(centralWidget);
+        hlCheckBox->setObjectName(QStringLiteral("hlCheckBox"));
+
+        gridLayout->addWidget(hlCheckBox, 0, 2, 1, 1);
 
         fontButton = new QPushButton(centralWidget);
         fontButton->setObjectName(QStringLiteral("fontButton"));
 
-        gridLayout->addWidget(fontButton, 0, 0, 1, 1);
-
-        codecComboBox = new QComboBox(centralWidget);
-        codecComboBox->setObjectName(QStringLiteral("codecComboBox"));
-
-        gridLayout->addWidget(codecComboBox, 1, 1, 1, 1);
+        gridLayout->addWidget(fontButton, 0, 0, 1, 2);
 
         backgroundColorButton = new QPushButton(centralWidget);
         backgroundColorButton->setObjectName(QStringLiteral("backgroundColorButton"));
 
-        gridLayout->addWidget(backgroundColorButton, 1, 0, 1, 1);
+        gridLayout->addWidget(backgroundColorButton, 1, 0, 1, 2);
 
         editorClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(editorClass);
@@ -142,8 +167,6 @@ public:
         compChooser->setText(QApplication::translate("editorClass", "\320\222\321\213\320\261\320\276\321\200 \320\272\320\276\320\274\320\277\320\270\320\273\321\217\321\202\320\276\321\200\320\260", Q_NULLPTR));
         compile->setText(QApplication::translate("editorClass", "\320\241\320\272\320\276\320\274\320\277\320\270\320\273\320\270\321\200\320\276\320\262\320\260\321\202\321\214", Q_NULLPTR));
         fastSave->setText(QApplication::translate("editorClass", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", Q_NULLPTR));
-        colorButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
-        fontButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
         codecComboBox->clear();
         codecComboBox->insertItems(0, QStringList()
          << QApplication::translate("editorClass", "Windows-1251", Q_NULLPTR)
@@ -151,6 +174,12 @@ public:
          << QApplication::translate("editorClass", "IBM 866", Q_NULLPTR)
          << QApplication::translate("editorClass", "CP-1251", Q_NULLPTR)
         );
+        colorButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
+        selectionColor->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \320\262\321\213\320\264\320\265\320\273\320\265\320\275\320\270\321\217", Q_NULLPTR));
+        textColorBG->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\204\320\276\320\275\320\260 \321\201\321\202\321\200\320\276\320\272\320\270", Q_NULLPTR));
+        selectionTextColor->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\202\320\265\320\272\321\202\321\201\320\260 \320\277\321\200\320\270 \320\262\321\213\320\264\320\265\320\273\320\265\320\275\320\270\320\270", Q_NULLPTR));
+        hlCheckBox->setText(QApplication::translate("editorClass", "\320\222\320\272\320\273/\320\222\321\213\320\272\320\273 \320\277\320\276\320\264\321\201\320\262\320\265\321\202\320\272\321\203 \321\201\320\270\320\275\321\202\320\260\320\272\321\201\320\270\321\201\320\260", Q_NULLPTR));
+        fontButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\210\321\200\320\270\321\204\321\202\320\260", Q_NULLPTR));
         backgroundColorButton->setText(QApplication::translate("editorClass", "\320\241\320\274\320\265\320\275\320\260 \321\206\320\262\320\265\321\202\320\260 \321\204\320\276\320\275\320\260", Q_NULLPTR));
         fileMenu->setTitle(QApplication::translate("editorClass", "\320\244\320\260\320\271\320\273", Q_NULLPTR));
         compileMenu->setTitle(QApplication::translate("editorClass", "\320\232\320\276\320\274\320\277\320\270\320\273\321\217\321\206\320\270\321\217", Q_NULLPTR));

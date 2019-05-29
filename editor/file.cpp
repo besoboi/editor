@@ -1,4 +1,4 @@
-#include <file.h>
+#include "file.h"
 
 QByteArray fileInstance::open(QString& name) {
 	QFile openedFile(name);

@@ -18,10 +18,12 @@ editor::editor(QWidget *parent)
 	_fontColorEdit = ui.colorButton;
 	_codecEdit = ui.codecComboBox;
 	_bgColorButton = ui.backgroundColorButton;
-	_codeHighlighter = new Highlighter(_textEditField->document());
 	_keyCtrlS = new QShortcut(this);
 	_keyCtrlS->setKey(Qt::CTRL + Qt::Key_S);
-
+	_hlCheckBox = ui.hlCheckBox;
+	_selectionColor = ui.selectionColor;
+	_selectionTextColor = ui.selectionTextColor;
+	_textBGColor = ui.textColorBG;
 	#ifdef Q_OS_WIN
 	ui.compile->setDisabled(true);
 	#endif
@@ -36,6 +38,10 @@ editor::editor(QWidget *parent)
 	connect(ui.compile, SIGNAL(triggered()), this, SLOT(compile()));
 	connect(_keyCtrlS, SIGNAL(activated()), this, SLOT(fastSave()));
 	connect(_codecEdit, SIGNAL(activated(int)) , this, SLOT(codecChange()));
+	connect(_hlCheckBox, SIGNAL(stateChanged(int)), this, SLOT(turnOnHL()));
+	connect(_selectionColor, SIGNAL(released()), this, SLOT(selectionColorChange()));
+	connect(_selectionTextColor, SIGNAL(released()), this, SLOT(selectionTextColorChange()));
+	connect(_textBGColor, SIGNAL(released()), this, SLOT(textBGColorChange()));
 }
 
 void editor::openFile() {
@@ -92,6 +98,14 @@ void editor::codecChange() {
 			_codec = QTextCodec::codecForName("CP-1251");
 		}
 	}
+#ifdef Q_OS_WIN 
+	QString text = _codec->toUnicode(QTextCodec::codecForName("Windows-1251")->fromUnicode(_textEditField->toPlainText().toStdString().c_str()));
+	_textEditField->setText(text);
+#endif 
+#ifdef Q_OS_LINUX
+	QString text = _codec->toUnicode(QTextCodec::codecForName("Windows-1251")->fromUnicode(_textEditField->toPlainText().toStdString().c_str()));
+	_textEditField->setText(text);
+#endif 
 }
 
 void editor::bgColorChange() {
@@ -110,3 +124,35 @@ void editor::compile() {
 #endif
 }
 
+void editor::turnOnHL() {
+	highliterIsOn = !highliterIsOn;
+	if (highliterIsOn == 1) {
+		if (_codeHighlighter) {
+		}
+		else {
+			_codeHighlighter = new Highlighter(_textEditField->document());
+		}
+	}
+	else {
+		if (_codeHighlighter) {
+			delete _codeHighlighter;
+			_codeHighlighter = NULL;
+		}
+	}
+
+}
+
+void editor::selectionColorChange() {
+	QColor selected = QColorDialog::getColor();
+	_textEditField->setStyleSheet("QTextEdit { selection-background-color : " + selected.name() + "}");
+}
+
+void editor::selectionTextColorChange() {
+	QColor selected = QColorDialog::getColor();
+	_textEditField->setStyleSheet("QTextEdit { selection-color : " + selected.name() + "}");
+}
+
+void editor::textBGColorChange() {
+	QColor selected = QColorDialog::getColor();
+	_textEditField->setTextBackgroundColor(selected);
+}

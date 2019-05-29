@@ -9,18 +9,19 @@
 #include <QPushButton>
 #include <QShortcut>
 #include <QTextCodec>
+#include <QCheckBox>
 
 #include "ui_editor.h"
 #include "Source.h"
 #include "file.h"
 
+
 class editor : public QMainWindow
 {
 	Q_OBJECT
-
 public:
 	editor(QWidget *parent = Q_NULLPTR);
-
+	bool highliterIsOn = 0;
 
 private slots:
 	void openFile();
@@ -32,17 +33,25 @@ private slots:
 	void codecChange();
 	void bgColorChange();
 	void compile();
+	void turnOnHL();
+	void selectionColorChange();
+	void selectionTextColorChange();
+	void textBGColorChange();
 private:
 	Ui::editorClass ui;
 	QMenu *_fileMenu;
 	QString _openedFileName;
-	Highlighter *_codeHighlighter;
+	Highlighter *_codeHighlighter = NULL;
 	QTextEdit *_textEditField;
 	QPushButton *_fontEdit;
 	QPushButton *_fontColorEdit;
 	QPushButton *_bgColorButton;
+	QPushButton *_selectionColor;
+	QPushButton *_selectionTextColor;
+	QPushButton *_textBGColor;
 	QShortcut *_keyCtrlS;
 	QComboBox *_codecEdit;
 	QTextCodec *_codec;
 	fileInstance _file;
+	QCheckBox *_hlCheckBox;
 };

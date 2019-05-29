@@ -47,10 +47,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="editor.h">
+    <QtMoc Include="Source.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Source.h">
+    <QtMoc Include="editor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
