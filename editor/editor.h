@@ -16,11 +16,12 @@
 #include "file.h"
 
 
-class editor : public QMainWindow
+class gui : public QMainWindow
 {
 	Q_OBJECT
 public:
-	editor(QWidget *parent = Q_NULLPTR);
+	gui(QWidget *parent = Q_NULLPTR);
+	~gui();
 	bool highliterIsOn = 0;
 
 private slots:
