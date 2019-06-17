@@ -23,6 +23,7 @@ public:
 	gui(QWidget *parent = Q_NULLPTR);
 	~gui();
 	bool highliterIsOn = 0;
+	QString textInDefaultCoding;
 
 private slots:
 	void openFile();
@@ -38,6 +39,7 @@ private slots:
 	void selectionColorChange();
 	void selectionTextColorChange();
 	void textBGColorChange();
+	void refreshText();
 private:
 	Ui::editorClass ui;
 	QMenu *_fileMenu;

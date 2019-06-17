@@ -43,6 +43,7 @@ gui::gui(QWidget *parent)
 	connect(_selectionColor, SIGNAL(released()), this, SLOT(selectionColorChange()));
 	connect(_selectionTextColor, SIGNAL(released()), this, SLOT(selectionTextColorChange()));
 	connect(_textBGColor, SIGNAL(released()), this, SLOT(textBGColorChange()));
+	connect(_textEditField, SIGNAL(textChanged()), this, SLOT(refreshText()));
 }
 
 void gui::openFile() {
@@ -67,7 +68,7 @@ void gui::changeFont() {
 	bool ok;
 	QFont font = QFontDialog::getFont(&ok, this);
 	if (ok) {
-		_textEditField->setFont(font);
+		_textEditField->setCurrentFont(font);
 	}
 	else {
 		return;
@@ -100,14 +101,9 @@ void gui::codecChange() {
 			_codec = QTextCodec::codecForName("CP-1251");
 		}
 	}
-#ifdef Q_OS_WIN 
-	QString text = _codec->toUnicode(QTextCodec::codecForName("Windows-1251")->fromUnicode(_textEditField->toPlainText().toStdString().c_str()));
+	QString text = _codec->toUnicode(textInDefaultCoding.toLocal8Bit());
 	_textEditField->setText(text);
-#endif 
-#ifdef Q_OS_LINUX
-	QString text = _codec->toUnicode(QTextCodec::codecForName("Windows-1251")->fromUnicode(_textEditField->toPlainText().toStdString().c_str()));
-	_textEditField->setText(text);
-#endif 
+
 }
 
 void gui::bgColorChange() {
@@ -162,6 +158,10 @@ void gui::textBGColorChange() {
 	_textEditField->setTextBackgroundColor(selected);
 }
 
+void gui::refreshText() {
+	textInDefaultCoding = (QString)_textEditField->toPlainText();
+}
+
 gui::~gui() {
 	delete _fileMenu;
 	delete _codeHighlighter;
@@ -176,3 +176,4 @@ gui::~gui() {
 	delete _codecEdit;
 	delete _hlCheckBox;
 }
+
