@@ -7,7 +7,7 @@
 #include <QFontDialog>
 #include <QSysInfo>
 
-gui::gui(QWidget *parent)
+Gui::Gui(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -46,7 +46,7 @@ gui::gui(QWidget *parent)
 	connect(_textEditField, SIGNAL(textChanged()), this, SLOT(refreshText()));
 }
 
-void gui::openFile() {
+void Gui::openFile() {
 	makeFile();
 	ui.fastSave->setDisabled(false);
 	_openedFileName = QFileDialog::getOpenFileName();
@@ -54,17 +54,17 @@ void gui::openFile() {
 	_textEditField->setText(text);
 }
 
-void gui::makeFile() {
+void Gui::makeFile() {
 	_textEditField->clear();
 	_openedFileName = "clear";
 }
 
-void gui::saveFile() {
+void Gui::saveFile() {
 	_openedFileName = QFileDialog::getSaveFileName();
 	_file.save(_openedFileName, _textEditField->toPlainText());
 }
 
-void gui::changeFont() {
+void Gui::changeFont() {
 	bool ok;
 	QFont font = QFontDialog::getFont(&ok, this);
 	if (ok) {
@@ -75,18 +75,18 @@ void gui::changeFont() {
 	}
 }
 
-void gui::changeFontColor() {
+void Gui::changeFontColor() {
 	QColor selected = QColorDialog::getColor();
 	_textEditField->setTextColor(selected);
 }
 
-void gui::fastSave() {
+void Gui::fastSave() {
 	if (_openedFileName != "clear") {
 		_file.save(_openedFileName, _textEditField->toPlainText());
 	}
 }
 
-void gui::codecChange() {
+void Gui::codecChange() {
 	if (_codecEdit->currentIndex() != -1) {
 		if (_codecEdit->currentIndex() == 0) {
 			_codec = QTextCodec::codecForName("Windows-1251");
@@ -108,12 +108,12 @@ void gui::codecChange() {
 
 }
 
-void gui::bgColorChange() {
+void Gui::bgColorChange() {
 	QColor selected = QColorDialog::getColor();
 	_textEditField->setStyleSheet("QTextEdit { background-color : " + selected.name() + "}");
 }
 
-void gui::compile() {
+void Gui::compile() {
 #ifdef Q_OS_LINUX
 	if (_openedFileName != "clear"){
 		QStringList filePath = _openedFileName.split("/");
@@ -127,7 +127,7 @@ void gui::compile() {
 #endif
 }
 
-void gui::turnOnHL() {
+void Gui::turnOnHL() {
 	highliterIsOn = !highliterIsOn;
 	if (highliterIsOn == 1) {
 		if (_codeHighlighter) {
@@ -145,26 +145,26 @@ void gui::turnOnHL() {
 
 }
 
-void gui::selectionColorChange() {
+void Gui::selectionColorChange() {
 	QColor selected = QColorDialog::getColor();
 	_textEditField->setStyleSheet("QTextEdit { selection-background-color : " + selected.name() + "}");
 }
 
-void gui::selectionTextColorChange() {
+void Gui::selectionTextColorChange() {
 	QColor selected = QColorDialog::getColor();
 	_textEditField->setStyleSheet("QTextEdit { selection-color : " + selected.name() + "}");
 }
 
-void gui::textBGColorChange() {
+void Gui::textBGColorChange() {
 	QColor selected = QColorDialog::getColor();
 	_textEditField->setTextBackgroundColor(selected);
 }
 
-void gui::refreshText() {
+void Gui::refreshText() {
 	textInDefaultCoding = (QString)_textEditField->toPlainText();
 }
 
-gui::~gui() {
+Gui::~Gui() {
 	delete _fileMenu;
 	delete _codeHighlighter;
 	delete _textEditField;

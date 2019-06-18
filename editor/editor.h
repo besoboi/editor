@@ -16,12 +16,12 @@
 #include "file.h"
 
 
-class gui : public QMainWindow
+class Gui : public QMainWindow
 {
 	Q_OBJECT
 public:
-	gui(QWidget *parent = Q_NULLPTR);
-	~gui();
+	Gui(QWidget *parent = Q_NULLPTR);
+	~Gui();
 	bool highliterIsOn = 0;
 	QString textInDefaultCoding;
 

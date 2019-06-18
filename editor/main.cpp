@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	gui w;
+	Gui w;
 	w.show();
 	return a.exec();
 }
