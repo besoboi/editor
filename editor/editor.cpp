@@ -102,7 +102,9 @@ void gui::codecChange() {
 		}
 	}
 	QString text = _codec->toUnicode(textInDefaultCoding.toLocal8Bit());
+	_textEditField->blockSignals(true);
 	_textEditField->setText(text);
+	_textEditField->blockSignals(false);
 
 }
 
